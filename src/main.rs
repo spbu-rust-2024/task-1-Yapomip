@@ -21,7 +21,8 @@ fn sort(vector: &mut Vec<i32>) {
 fn print_vector(vector: &Vec<i32>) {
     
     for num in 0..=vector.len() - 2 {
-        print!("{num} ");
+        let a = vector[num];
+        print!("{a} ");
     }
     let a = vector[vector.len() - 1];
     print!("{a}");
@@ -35,7 +36,9 @@ fn main() {
     
     for num in input.split_whitespace() {
         vector.push(match num.parse::<i32>() {
-            Ok(t) => t,
+            Ok(t) => {
+                t
+            },
             Err(_) => panic!("Error parce number"),
         });
     }
