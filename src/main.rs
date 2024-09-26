@@ -20,9 +20,11 @@ fn sort(vector: &mut Vec<i32>) {
 
 fn print_vector(vector: &Vec<i32>) {
     
-    for num in 0..=vector.len() - 2 {
-        let a = vector[num];
-        print!("{a} ");
+    if vector.len() > 1 {
+        for num in 0..=vector.len() - 2 {
+            let a = vector[num];
+            print!("{a} ");
+        }
     }
     let a = vector[vector.len() - 1];
     print!("{a}");
