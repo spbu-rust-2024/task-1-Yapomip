@@ -9,7 +9,7 @@ fn swap(vector: &mut Vec<i32>, n1: usize, n2: usize) {
 }
 
 fn sort(vector: &mut Vec<i32>) {
-    for i in 1..=vector.len() - 1 {
+    for i in 1..vector.len() {
         let mut j = i;
         while j > 0 && vector[j - 1] > vector[j] {
             swap(vector, j - 1, j);
@@ -21,7 +21,7 @@ fn sort(vector: &mut Vec<i32>) {
 fn print_vector(vector: &Vec<i32>) {
     
     if vector.len() > 1 {
-        for num in 0..=vector.len() - 2 {
+        for num in 0..vector.len() - 1 {
             let a = vector[num];
             print!("{a} ");
         }
@@ -37,12 +37,8 @@ fn main() {
     io::stdin().read_line(&mut input).expect("Failed to read line");
     
     for num in input.split_whitespace() {
-        vector.push(match num.parse::<i32>() {
-            Ok(t) => {
-                t
-            },
-            Err(_) => panic!("Error parce number"),
-        });
+        let num_parsed = num.parse::<i32>().expect("Failed to read line");
+        vector.push(num_parsed);
     }
     
     sort(&mut vector);
