@@ -1,33 +1,53 @@
-
 use std::io;
 
-fn swap(vector: &mut Vec<i32>, n1: usize, n2: usize) {
-    let tmp: i32 = vector[n1];
+fn swap(slice: &mut [i32], n1: usize, n2: usize) {
+    let tmp: i32 = slice[n1];
     
-    vector[n1] = vector[n2];
-    vector[n2] = tmp;
+    slice[n1] = slice[n2];
+    slice[n2] = tmp;
 }
 
-fn sort(vector: &mut Vec<i32>) {
-    for i in 1..vector.len() {
+#[allow(dead_code)]
+fn sort(mass: &mut [i32]) {
+    for i in 1..mass.len() {
         let mut j = i;
-        while j > 0 && vector[j - 1] > vector[j] {
-            swap(vector, j - 1, j);
+        while j > 0 && mass[j - 1] > mass[j] {
+            swap(mass, j - 1, j);
             j = j - 1;
         }
     }
 }
 
-fn print_vector(vector: &Vec<i32>) {
+fn sort_shell(mass: &mut [i32]) {
+    let mut s = mass.len() / 2;
     
-    if vector.len() > 1 {
-        for num in 0..vector.len() - 1 {
-            let a = vector[num];
-            print!("{a} ");
+    while s > 0 {
+        for i in s..mass.len() {
+            let mut j = i - s;
+            
+            loop {
+                if mass[j] > mass[j + s] {
+                    swap(mass, j, j + s);
+                }
+                
+                if j >= s {
+                    j = j - s;
+                } else {
+                    break;
+                }
+            }
         }
+        s = s / 2;
     }
-    let a = vector[vector.len() - 1];
-    print!("{a}");
+}
+
+fn print_mass(slice: &[i32]) {
+    print!("{}", slice[0]);
+    
+    for num in 1..slice.len() {
+        let a = slice[num];
+        print!(" {a}");
+    }
 }
 
 fn main() {
@@ -41,8 +61,11 @@ fn main() {
         vector.push(num_parsed);
     }
     
-    sort(&mut vector);
-    
-    print_vector(&vector);
-
+    if vector.len() > 0 {
+        sort_shell(&mut vector);
+        
+        print_mass(&vector);
+    } else {
+        println!("Mass must not 0");
+    }
 }
